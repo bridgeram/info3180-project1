@@ -5,14 +5,18 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 import os
-from app import app
+from app import *
 from flask import render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
+from forms import *
+import datetime
+from models import UserProfile
 
 
 ###
 # Routing for your application.
 ###
+
 
 @app.route('/')
 def home():
@@ -28,9 +32,6 @@ def about():
 
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
-    if not session.get('logged_in'):
-        abort(401)
-
     # Instantiate your form class
 
     # Validate file upload on submit
@@ -41,29 +42,52 @@ def upload():
         return redirect(url_for('home'))
 
     return render_template('upload.html')
+    
+    
+@app.route('/Profile',methods=['GET','POST'])
+def Profile():
+    form=uploadForm()
+    if request.method== "POST" and form.validate_on_submit():
+        dateCreated=datetime.datetime.now()
+        fname=form.firstname.data
+        lname=form.lastname.data
+        gen=form.gender.data
+        email=form.email.data
+        location=form.location.data
+        bio=form.bio.data
+        pic=form.photo.data
+        filename = secure_filename(pic.filename)
+        
+        user = UserProfile(first_name=fname, last_name=lname, gender=gen, email=email, location=location, bio=bio, img_name=filename, date_created=dateCreated)
+        db.session.add(user)
+        db.session.commit()
+        pic.save(os.path.join(imgfolder, filename))
+        flash('Successfully added.', 'success')
+        return redirect(url_for('Profiles'))
+        
+    
+    return render_template('Profile.html',form=form)
+    
+@app.route('/Profiles')
+def Profiles():
+    image_names= get_uploaded_images()
+    users = UserProfile.query.all()
+    return render_template('Profiles.html', users=users, image_names=image_names)
+    
+@app.route('/Profile/<userid>')
+def user_profile(userid):
+    user = UserProfile.query.filter_by(id=userid).first()
+    image_names= get_uploaded_images()
+    return render_template('userprofile.html', user=user, image_names=image_names)
 
-
-@app.route('/login', methods=['POST', 'GET'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME'] or request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid username or password'
-        else:
-            session['logged_in'] = True
-            
-            flash('You were logged in', 'success')
-            return redirect(url_for('upload'))
-    return render_template('login.html', error=error)
-
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out', 'success')
-    return redirect(url_for('home'))
-
-
+def get_uploaded_images():
+    image_names= os.listdir(imgfolder)
+    image=[]
+    for x in image_names:
+        a,b= x.rsplit(".",1)
+        if b == "jpg" or b == "png":
+            image.append(x)
+    return image
 ###
 # The functions below should be applicable to all Flask apps.
 ###

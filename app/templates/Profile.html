@@ -1,5 +1,40 @@
  {% extends "base.html" %}
+ 
  {% block main %}
  
+ <form class="" action="{{ url_for('Profile') }}" method="POST" enctype="multipart/form-data">
+{{ form.csrf_token }} 
  
+ <strong>{{ form.firstname.label }}</strong></br>
+ 
+ {{ form.firstname }}
+ </br>
+ <strong>{{ form.lastname.label }}</strong></br>
+ 
+ {{form.lastname }}
+ </br>
+ <strong>{{ form.gender.label }}</strong></br>
+ {{ form.gender }}
+ </br>
+ 
+ <strong>{{form.email.label }}</strong></br>
+ {{ form.email }}
+ 
+ </br>
+ 
+ <strong>{{ form.location.label }}</strong></br>
+ {{ form.location }}
+ </br>
+ 
+ <strong>{{ form.bio.label }}</strong></br>
+ {{ form.bio }}
+ </br>
+<strong> {{ form.photo.label }}</strong></br>
+ </br>
+ {{ form.photo }}
+ </br></br>
+  <button type="submit" name="submit" class="">Add Profile</button>
+ 
+ 
+ </form>
  {% endblock %}

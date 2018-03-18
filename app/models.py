@@ -1,4 +1,5 @@
 from . import db
+import datetime
 
 class UserProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -7,7 +8,9 @@ class UserProfile(db.Model):
     gender = db.Column(db.String(10))
     email =db.Column(db.String(100), unique=True)
     location=db.Column(db.String(100))
-    bio = db.Column(db.String(255))
+    bio = db.Column(db.Text)
+    img_name=db.Column(db.String(100))
+    date_created = db.Column(db.DateTime)
 
     def is_authenticated(self):
         return True
