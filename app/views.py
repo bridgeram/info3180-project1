@@ -70,15 +70,13 @@ def Profile():
     
 @app.route('/Profiles')
 def Profiles():
-    image_names= get_uploaded_images()
     users = UserProfile.query.all()
-    return render_template('Profiles.html', users=users, image_names=image_names)
+    return render_template('Profiles.html', users=users)
     
 @app.route('/Profile/<userid>')
 def user_profile(userid):
     user = UserProfile.query.filter_by(id=userid).first()
-    image_names= get_uploaded_images()
-    return render_template('userprofile.html', user=user, image_names=image_names)
+    return render_template('userprofile.html', user=user)
 
 def get_uploaded_images():
     image_names= os.listdir(imgfolder)

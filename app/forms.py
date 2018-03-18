@@ -8,7 +8,7 @@ class uploadForm(FlaskForm):
     
     firstname = StringField('FirstName', validators=[InputRequired()])
     lastname = StringField('Lastname', validators=[InputRequired()])
-    gender = SelectField('Gender',choices=[('',"CHOOSE GENDER"),('male','Male'),('female','Female')] ,validators=[validators.Required("Gender Must be specified")])
+    gender = SelectField('Gender',choices=[('',"Select Gender"),('Male','Male'),('Female','Female')] ,validators=[validators.Required("Gender Must be specified")])
     email= StringField('Email', validators=[InputRequired()])
     location=StringField('Location',validators=[InputRequired()])
     bio = TextAreaField('Biography', validators=[InputRequired()])

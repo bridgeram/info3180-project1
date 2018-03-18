@@ -1,14 +1,30 @@
  {% extends "base.html" %}
  {% block main %}
- 
+ <center>
+ <div class='larger1'>
+ <div class='left'>
   <img src="{{url_for('static', filename='uploads/'+ user.img_name)}}" alt="user photo" class="userimg">
+  </div>
   
-  <div id= "name"> <h1>{{ user.first_name }} {{ user.last_name }} </h1>   </div>
+  <div class='right'>
+  <ul style="list-style: none;">
+  <div id= "name"> <h1>&emsp;{{ user.first_name }} {{ user.last_name }} </h1>   </div>
+         <li> &emsp; <i class="fa fa-envelope-o"></i>&emsp;{{ user.email }}</br> </li>
+         
+           <li>&emsp;<i class="fa fa-map-marker"></i>&emsp;{{user.location }}</li>
   
-            <div id="date"> Created on : {{ user.date_created.strftime("%B %d, %Y") }}  </div>
-           
-            <div id="about-me">  {{ user.bio }} </div>
+           <li><div id="date"> &emsp;&emsp;&emsp;&emsp;&emsp;<i class="fa fa-calendar-o"></i>&emsp;Joined on {{ user.date_created.strftime("%B %d, %Y") }}  </div></li>
+           </div>
+            </ul>
+          <left>
+            <div class='right'><strong>About me</strong></div></br><div id="about-me" class='right'> {{ user.bio }} </div></br>
+            </left>
+ 
+             <button type="button" class="btn btn-success">Send Message</button>&emsp;&emsp;&emsp;
+             <button type="button" class="btn btn-primary">Follow</button>
               
+     </div>
+     
               
                
  

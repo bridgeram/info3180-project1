@@ -2,39 +2,53 @@
  
  {% block main %}
  
+ <center>
+  <h1>Add Profile</h1></br>
+  <div class='larger1'>
  <form class="" action="{{ url_for('Profile') }}" method="POST" enctype="multipart/form-data">
 {{ form.csrf_token }} 
- 
+ <div class="col-md-7">
  <strong>{{ form.firstname.label }}</strong></br>
  
- {{ form.firstname }}
+{{ form.firstname(class="form-control") }}
  </br>
+ </div>
+ <div class="col-md-7">
  <strong>{{ form.lastname.label }}</strong></br>
  
- {{form.lastname }}
- </br>
- <strong>{{ form.gender.label }}</strong></br>
- {{ form.gender }}
- </br>
- 
- <strong>{{form.email.label }}</strong></br>
- {{ form.email }}
- 
- </br>
- 
- <strong>{{ form.location.label }}</strong></br>
- {{ form.location }}
- </br>
- 
- <strong>{{ form.bio.label }}</strong></br>
- {{ form.bio }}
- </br>
-<strong> {{ form.photo.label }}</strong></br>
- </br>
- {{ form.photo }}
+ {{form.lastname(class="form-control") }}
  </br></br>
-  <button type="submit" name="submit" class="">Add Profile</button>
+ </div>
+  <div class="col-md-7">
+ <strong>{{ form.gender.label }}</strong></br>
+ {{ form.gender(class="form-control") }}
+ </br></br>
+ </div>
+  <div class="col-md-7">
+ <strong>{{form.email.label }}</strong></br>
+ {{ form.email(class="form-control") }}
+ 
+ </br></br>
+ </div>
+ 
+  <div class="col-md-7">
+ <strong>{{ form.location.label }}</strong></br>
+ {{ form.location(class="form-control") }}
+ </br></br>
+ </div>
+  <div class="col-md-7">
+ <strong>{{ form.bio.label }}</strong></br>
+ {{ form.bio(class="form-control") }}
+ </br></br>
+ </div>
+<strong> {{ form.photo.label }}</strong></br>
+
+ <label for="photo" type="file" class="custom-file-upload label_bold">Browse...</label>
+ {{form.photo}}
+ </br></br>
+  <button type="submit" name="submit" class="btn btn-success">Add Profile</button>
  
  
  </form>
+ </div></center>
  {% endblock %}
